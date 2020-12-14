@@ -55,6 +55,7 @@ class DropDownField extends FormField<String> {
   final ValueChanged<dynamic> onValueChanged;
   final bool strict;
   final int itemsVisibleInDropdown;
+  final bool showClearButton;
 
   /// Controls the text being edited.
   ///
@@ -82,7 +83,8 @@ class DropDownField extends FormField<String> {
       this.onValueChanged,
       this.itemsVisibleInDropdown: 3,
       this.enabled: true,
-      this.strict: true})
+      this.strict: true,
+      this.showClearButton})
       : super(
           key: key,
           autovalidate: false,
@@ -148,13 +150,14 @@ class DropDownField extends FormField<String> {
                         inputFormatters: inputFormatters,
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(Icons.close),
-                      onPressed: () {
-                        if (!enabled) return;
-                        state.clearValue();
-                      },
-                    )
+                    if (showClearButton)
+                      IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () {
+                          if (!enabled) return;
+                          state.clearValue();
+                        },
+                      )
                   ],
                 ),
                 !state._showdropdown
